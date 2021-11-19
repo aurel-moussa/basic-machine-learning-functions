@@ -71,3 +71,24 @@ def initialize_network(num_inputs, num_hidden_layers, num_nodes_hidden, num_node
 
 #The network initialization function has been defined, let us run this baby and create an aptly named small baby network!
 small_baby_network = initialize_network(5, 3, [3, 2, 3], 1)
+
+#we have initialized this network. 
+#Put we do not yet know the weighted sum at each node. 
+#For that we need to compute the dot product of inputs and weights, and then add the bias
+
+def compute_weighted_sum(inputs, weights, bias):
+    return np.sum(inputs * weights) + bias
+
+
+#let us seed a random input layer
+from random import seed #yeah, yeah, i know, we already have it in the packages at the top, i just want to see it again
+np.random.seed(12)
+inputs = np.around(np.random.uniform(size=5), decimals=2)
+print('The inputs to the network are {}'.format(inputs))
+
+#just to see everything works, we will do a check run for the weighted sum computation of the layer 1 node 1
+node_weights = small_baby_network['layer_1']['node_1']['weights']
+node_bias = small_baby_network['layer_1']['node_1']['bias']
+
+weighted_sum = compute_weighted_sum(inputs, node_weights, node_bias)
+print('The weighted sum at the first node in the hidden layer is {}'.format(np.around(weighted_sum[0], decimals=4)))
