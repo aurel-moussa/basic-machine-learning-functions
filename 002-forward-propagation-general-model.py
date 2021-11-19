@@ -10,8 +10,8 @@ num_hidden_layers = 2 # number of hidden layers
 m = [2, 2] # number of nodes in each hidden layer
 num_nodes_output = 1 # number of nodes in the output layer
 
+###### TRYING OUT THE LOOP ########
 #initialize the network by looping through all the layers and nodes and assigning random weights and biases
-
 num_nodes_previous = n # number of nodes in the previous layer (starting with n, since the input layer is the first one)
 network = {} # initialize network an an empty dictionary
 
@@ -39,3 +39,35 @@ for layer in range(num_hidden_layers + 1):
     num_nodes_previous = num_nodes
     
 print(network) # print network
+
+#### MAKING THE INITIZALIZATION OF THE NETWWORK INTO A NICE CLEAN FUNCTION ####
+def initialize_network(num_inputs, num_hidden_layers, num_nodes_hidden, num_nodes_output):
+    
+    num_nodes_previous = num_inputs # number of nodes in the previous layer
+    network = {}
+    
+    # loop through each layer and randomly initialize weights and biases associated with each layer
+    for layer in range(num_hidden_layers + 1): #include the output layer, too
+        
+        if layer == num_hidden_layers:
+            layer_name = 'output' # name last layer in the network output
+            num_nodes = num_nodes_output
+        else:
+            layer_name = 'layer_{}'.format(layer + 1) # otherwise give the layer a number, and dont forget about 0-indexing
+            num_nodes = num_nodes_hidden[layer] 
+        
+        # initialize weights and bias for each node
+        network[layer_name] = {}
+        for node in range(num_nodes):
+            node_name = 'node_{}'.format(node+1) #and dont forget about 0-indexing
+            network[layer_name][node_name] = {
+                'weights': np.around(np.random.uniform(size=num_nodes_previous), decimals=2),
+                'bias': np.around(np.random.uniform(size=1), decimals=2),
+            }
+    
+        num_nodes_previous = num_nodes
+
+    return network # return the network
+
+#The network initialization function has been defined, let us run this baby and create an aptly named small baby network!
+small_baby_network = initialize_network(5, 3, [3, 2, 3], 1)
