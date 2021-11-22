@@ -126,6 +126,7 @@ def forward_propagate(network, inputs):
         
             # compute the weighted sum and the output of each node at the same time 
             node_output = node_activation(compute_weighted_sum(layer_inputs, node_data['weights'], node_data['bias']))
+            #obvs this only works if you define the networks to have nice dictionary type with keys that are called weights and bias
             layer_outputs.append(np.around(node_output[0], decimals=4))
             
         if layer != 'output':
@@ -135,3 +136,12 @@ def forward_propagate(network, inputs):
 
     network_predictions = layer_outputs
     return network_predictions
+
+#let us run a test on our small baby network with the inputs defined above
+forward_propagate(small_baby_network, inputs)
+
+#### PUTTING IT ALL TOGETHER - INITIALIZATION & FORWARD PROPAGATION ####
+my_network = initialize_network(5, 3, [2, 3, 2], 3) #initialize network with a layer of x entry nodes, y layers of size z nodes each, and m output nodes
+inputs = np.around(np.random.uniform(size=5), decimals=2) #get the inputs for the x entry nodes
+predictions = forward_propagate(my_network, inputs) #and run our prediction
+print('The predicted values by the network for the given input {} are {}'.format(inputs, predictions))
