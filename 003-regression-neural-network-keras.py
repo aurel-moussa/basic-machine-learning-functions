@@ -27,3 +27,11 @@ target = concrete_data['Strength'] # Strength column
 #checking whether split worked
 predictors.head()
 target.head()
+
+#normalize data
+predictors_norm = (predictors - predictors.mean()) / predictors.std()
+predictors_norm.head()
+
+#save number of predictors into a variable, because we will need it later
+n_cols = predictors_norm.shape[1] # number of predictors
+
