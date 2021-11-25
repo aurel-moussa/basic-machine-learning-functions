@@ -65,3 +65,23 @@ def classification_model():
     # compile model
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     return model
+
+# initialize the model
+model = classification_model()
+
+# fit the model
+model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10, verbose=2)
+
+### EVALUATING ###
+# evaluate the model
+scores = model.evaluate(X_test, y_test, verbose=0)
+print('Accuracy: {}% \n Error: {}'.format(scores[1], 1 - scores[1]))        
+
+### SAVING & LOADING ###
+# cannot afford to retrain your model everytime, so just save it
+
+model.save('classification_model_digit_recognition.h5')
+
+#to load
+from keras.models import load_model
+pretrained_model = load_model('classification_model.h5')
